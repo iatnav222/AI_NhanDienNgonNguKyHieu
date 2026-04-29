@@ -1,0 +1,32 @@
+# Môi trường ảo (Virtual Environment)
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE & Hệ điều hành
+.vscode/
+.idea/
+.DS_Store
+
+# File mô hình AI (Rất nặng, không đẩy lên Git)
+models/
+*.pt
+*.pth
+*.weights
+*.onnx
+
+# Dữ liệu huấn luyện (Rất nặng, không đẩy lên Git)
+datasets/
+data/
+*.zip
+*.rar
+*.tar.gz
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/

@@ -7,22 +7,22 @@
 - **[CẦN LÀM]:** Viết đoạn văn giới thiệu về kiến trúc YOLOv8. Nêu ưu thế tốc độ thời gian thực (Real-time).
 
 ### 1.2 Mô hình triển khai (Deploy)
-- **[CẦN LÀM]:** Vẽ sơ đồ triển khai (Webcam -> Flask -> YOLO -> Browser).
+- **[CẦN LÀM]:** Vẽ sơ đồ triển khai (Webcam -> Flask -> YOLO -> Browser & SQLite).
 
 ---
 
 ## Chương 2: Xây dựng Hệ thống
 ### 2.1 Kiến trúc hệ thống
-- **[CẦN LÀM]:** Viết mô tả bằng lời giải thích sự tương tác giữa Frontend (HTML/JS) và Backend (Flask).
+- **[CẦN LÀM]:** Viết mô tả bằng lời giải thích sự tương tác giữa Frontend (HTML/JS), Backend (Flask) và Cơ sở dữ liệu.
 
-### 2.2 Cơ sở dữ liệu (Tùy chọn)
-- **[CẦN LÀM]:** Chốt xem có dùng MySQL lưu lịch sử không. Nếu có, cần cung cấp Schema cơ sở dữ liệu (Sơ đồ ERD) và code tạo bảng.
+### 2.2 Cơ sở dữ liệu
+- **[CẦN LÀM]:** Chèn hình ảnh bảng mô tả CSDL SQLite. Bảng `History` gồm 3 cột: `id` (Khóa chính), `text_content` (Nội dung câu đã dịch), `created_at` (Thời gian lưu).
 
 ### 2.3 Giao diện đề tài
-- **[CẦN LÀM]:** Chụp ảnh màn hình giao diện web lúc đang hoạt động nhận diện chữ cái dán vào đây.
+- **[CẦN LÀM]:** Chụp ảnh màn hình giao diện web (Cần thấy rõ khu vực Webcam và khu vực Bảng Lịch sử) dán vào đây.
 
 ### 2.4 Cài đặt & Kỹ thuật kết nối
-- **[CẦN LÀM]:** Dán các đoạn code quan trọng giải thích cơ chế Flask stream video qua hàm `yield` và `imencode`.
+- **[CẦN LÀM]:** Dán các đoạn code quan trọng giải thích cơ chế Flask stream video qua hàm `yield` và code Python kết nối với SQLite (`import sqlite3`).
 
 ---
 

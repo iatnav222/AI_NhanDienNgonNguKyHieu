@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhận Diện Ngôn Ngữ Ký Hiệu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bản Dịch Ngôn Ngữ Ký Hiệu AI</h1>
+        
+        <div class="main-content">
+            <!-- Khu vực luồng Camera -->
+            <div class="video-section">
+                <img src="{{ url_for('video_feed') }}" alt="Webcam Feed" id="video_feed">
+                
+                <div class="translation-box">
+                    <h3>Chữ cái đang nhận diện: <span id="current_letter">-</span></h3>
+                    <div class="sentence-builder">
+                        <input type="text" id="sentence_input" placeholder="Câu hoàn chỉnh sẽ được nối ở đây..." readonly>
+                        <div class="buttons">
+                            <button onclick="addLetter()" class="btn-add">Thêm chữ này (+)</button>
+                            <button onclick="addSpace()" class="btn-space">Dấu cách (Space)</button>
+                            <button onclick="clearSentence()" class="btn-clear">Xóa trắng</button>
+                            <button onclick="saveSentence()" class="btn-save">LƯU CÂU (Vào DB)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Khu vực hiển thị Lịch sử (Database) -->
+            <div class="history-section">
+                <h2>Lịch Sử Dịch Thuật (SQLite)</h2>
+                <ul id="history_list">
+                    <!-- Dữ liệu từ DB sẽ load vào đây -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gọi API lấy chữ cái đang nhận diện (Lặp lại mỗi 1 giây)
+        setInterval(() => {
+            fetch('/get_latest_text')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('current_letter').innerText = data.text || "-";
+                });
+        }, 1000);
+
+        function addLetter() {
+            const letter = document.getElementById('current_letter').innerText;
+            if(letter && letter !== "-") {
+                document.getElementById('sentence_input').value += letter;
+            }
+        }
+
+        function addSpace() {
+            document.getElementById('sentence_input').value += " ";
+        }
+
+        function clearSentence() {
+            document.getElementById('sentence_input').value = "";
+        }
+
+        function saveSentence() {
+            const content = document.getElementById('sentence_input').value;
+            if(!content.trim()) {
+                alert("Câu đang rỗng, không có gì để lưu vào CSDL!");
+                return;
+            }
+
+            // Gửi dữ liệu về backend để chèn vào SQLite
+            fetch('/save_history', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: content })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    alert("Đã lưu vào Cơ Sở Dữ Liệu thành công!");
+                    clearSentence();
+                    loadHistory(); // Tự động load lại danh sách bên phải
+                }
+            });
+        }
+
+        function loadHistory() {
+            fetch('/get_history')
+                .then(res => res.json())
+                .then(data => {
+                    const list = document.getElementById('history_list');
+                    list.innerHTML = "";
+                    data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>${item.time}</strong>: <span style="color:#e74c3c; font-weight:bold;">${item.content}</span>`;
+                        list.appendChild(li);
+                    });
+                });
+        }
+
+        // Tự động load lịch sử Database lúc mới mở web lên
+        window.onload = loadHistory;
+    </script>
+</body>
+</html>

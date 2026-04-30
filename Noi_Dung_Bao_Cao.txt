@@ -1,0 +1,76 @@
+*nội dung mẫu báo cáo cuối kì thầy đưa, tôi đã copy chuyển nội dung từ file .docx sang file .txt này rồi, dưới đây là toàn bộ nội dung đó, tôi đã bổ sung thêm ý kiến và thắc mắc của tui: 
+
+Nhóm các nội dung đầu của báo cáo như: bìa, mục lục, mục lục hình, mục lục bảng biểu. Sau đó là đến các chương:(bỏ qua những nội dung này nhé, không cần quan tâm)
+
+Chương 1 Tổng quan về <Tên Đề Tài>
+1.1 Tổng quan về <mô hình/API AI sử dụng trong đề tài> 
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: mô hình và api ai thì khác nhau như thế nào? nên chọn cái nào sẽ hợp lý nhất
+-Giới thiệu ngắn gọn về chức năng mà API hay mô hình AI cung cấp.
+-Nếu là Mô hình thì trình bày kiến trúc tổng quát và ưu điểm của mô hình (MÔ HÌNH PHÙ HỢP XỬ LÝ BÀI TOÁN NÀO).
+-Nếu là API thì trình bày API này (theo công bố của công ty cung cấp API quảng cáo):
++Xây dựng trên mô hình nào.
++Thông số bộ ngữ liệu mà API đã huấn luyện.
++Kết quả thử nghiệm
+1.2 Mô hình triển khai (deploy) của <tên đề tài>
+-Mô hình hóa “mô hình triển khai”
+-Mô tả bằng lời
+-Trình bày rõ mô hình AI/hay API được gọi hay tích hợp ở đâu
+
+Chương 2 Xây dựng <Tên Đề Tài>
+2.1 Kiến trúc của <Tên đề tài>
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: tôi không rõ nên thiết kế kiến trúc như thế nào, có lẽ là cần vẽ 1 cái hình về cái kiến trúc này
+2.2 Cơ sở dữ liệu của <Tên đề tài>
+-Trình bày kiến trúc ở mức quan niệm (sơ đồ kèm mô tả)
+-Trình bày kiến trúc ở mức vật lý (sơ đồ kèm mô tả)
+-Code cài đặt csdl 
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: cơ sở dữ liệu thì mình cần phải làm gì, do đa phần mình đều huấn luyện ai thì tui chưa rõ lắm, dùng mysql được không?
+2.3 Giao Diện Của đề tài
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: giao diện thì tui sẽ biết cách bỏ vào báo cáo, đơn giản chỉ là chụp hình.
+2.4 Cài đặt 
+-Trình bày kỹ thuật kết nối CSDL và code kết nối CSDL được sử dụng trong đề tài
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: kỹ thuật kết nối là sao
+
+Chương 3. <Mô hình /API>sử dụng trong<TÊN ĐỀ TÀI>
+3.1.	Ngữ liệu huấn luyện 
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: cần phải làm gì ở phần này?
+3.2.	Quá trình huấn luyện <Mô hình /API>.
+3.3.	Kết quả - đánh giá & độ chính xác của <Mô hình /API>
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: kết quả, đánh giá, độ chính xác dựa vào đâu để xác định?
+3.4.	Tích hợp API/Mô hình vào <TÊN ĐỀ TÀI>
+-Trình bày chi tiết “vị trí tích hợp của mô hình/ API ” theo sơ đồ ở 1.2
+-Code khai báo gọi mô hình/API là ngôn ngữ gì
+-Trình bày cụ thể từng dòng code gọi/khai báo mô hình/API đã làm trong đề tài.
+-Trình bày code xử lý kết quả trả về từ API.
+-Trình bày code gửi yêu cầu và dữ liệu cho API
+
+Chương 4 Tài liệu tham khảo
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: dưới là hướng dẫn cách thiết kế chương tài liệu tham khảo
+*ý kiến, đề xuất hoặc chỉ dẫn của bản thân: trong phần này khi làm xong toàn bộ các chương, tui sẽ tìm các tài liệu tham khảo có tính tương đồng để bổ sung sau
+Chú ý
+⁃	Trích dẫn tài liệu theo chuẫn IEEE
+⁃	Sử dụng chức năng Citations & Bibliography
+
+Sách:
+[Số] Tên tác giả, Tên sách, phiên bản. Nơi xuất bản: Nhà xuất bản, năm xuất bản.
+Ví dụ:
+[1] Nguyễn Nhật Ánh, Mắt biếc, tái bản 2019. Việt Nam: Nhà xuất bản Trẻ, 2019.
+
+Tạp chí - Báo:
+[Số] Tên tác giả, “Tên bài báo”, Tên tạp chí, số báo, số trang, ngày phát hành. Địa chỉ URL (Nếu là tạp chí điện tử).
+Ví dụ
+[1] T. C. Nguyen and H. Thai, “Review: emulsion techniques for producing polymer based drug delivery systems”, Vietnam J. Sci. Technol., vol. 61, no. 1, pp. 1–26, Feb. 2023.
+
+Luận văn:
+[Số] Tên tác giả, “Tên luận văn/luận án,” Kiểu luận văn, Tên ngành, Tên Trường Đại học, Nơi phát hành, Năm.
+Ví dụ:
+[1] Ngô Thành Hưng, “Đánh giá kết quả phẫu thuật tái tạo van động mạch chủ bằng phương pháp Ozaki điều trị bệnh van động mạch chủ đơn thuần tại bệnh viện E,” Luận án Tiến sĩ, Ngoại khoa, Trường Đại học Y Hà Nội, Việt Nam, 2021..
+
+WebSite:
+[Số] Tên tác giả/Tên website. (Năm, tháng. Ngày phát hành). Tên trang truy cập [Online]. Địa chỉ URL
+Ví dụ:
+[2] Ngân hàng thế giới. (2018). Báo cáo Chỉ số năng lực Logistics 2018 [Online]. Từ: http://www.worldbank.lpi.com/
+
+*Tổng hợp ra markdown file
+file 1: là file khung giải thích các việc cần làm trong file báo cáo. từng chương cần thực hiện điều gì? ý kiến của bạn như nào so với nội dung tôi đã đưa ra? ý kiến của bạn có thể khác với nội dung tôi đưa ra, nếu khác hãy giải thích rõ và đưa ra ý kiến bạn nghĩ hợp lý hơn, nếu được hãy thêm ý kiến của tôi khi triển khai đồ án vào đó luôn, ghi rõ là (ý kiến cá nhân).
+file 2: tôi muốn bạn chia ra thành các Chương, cập nhật liên tục file này trong quá trình thực thi đồ án, note song song các việc cần phải cung cấp vào báo cáo. ví dụ quá trình huấn luyện, cần chụp ảnh, cần vẽ sơ đồ, code cần có trong báo cáo, ...
+=>File 2 này sẽ là file chính để tôi dựa vào làm báo cáo

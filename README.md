@@ -28,7 +28,7 @@ ultralytics.checks()
 ```
 
 ### Bước 4: Chạy lệnh Train mô hình
-Tạo thêm một ô code, dán đoạn mã dưới đây vào và chạy. Quá trình này sẽ huấn luyện mô hình trong **100 epochs**. 100 epochs train 3 tiếng, phải là 100 epochs độ chính xác mới cao.
+Tạo thêm một ô code, dán đoạn mã dưới đây vào và chạy. Quá trình này sẽ huấn luyện trong khoảng 3 tiếng.
 
 ```python
 from ultralytics import YOLO
@@ -38,7 +38,7 @@ model.train(data=f"{dataset.location}/data.yaml", epochs=100, imgsz=640)
 
 ### Bước 5: Nén Thư Mục
 Sau khi quá trình huấn luyện kết thúc, toàn bộ kết quả train được lưu trong thư mục `runs/`.
-Tạo ô code cuối cùng và chạy đoạn mã sau để nén toàn bộ thư mục đó lại:
+Tạo ô code cuối cùng và chạy đoạn mã phía dưới để nén toàn bộ file train lại:
 
 ```python
 import shutil

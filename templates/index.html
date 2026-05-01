@@ -13,7 +13,14 @@
         <div class="main-content">
             <!-- Khu vực luồng Camera -->
             <div class="video-section">
-                <img src="{{ url_for('video_feed') }}" alt="Webcam Feed" id="video_feed">
+                <div class="camera-controls">
+                    <button onclick="startCamera()" class="btn-cam btn-start-cam">Bật Camera</button>
+                    <button onclick="stopCamera()" class="btn-cam btn-stop-cam" style="display: none;">Tắt Camera</button>
+                </div>
+                <img src="" alt="Camera đang tắt" id="video_feed" style="display: none;">
+                <div id="camera_placeholder" class="camera-placeholder">
+                    <p>Vui lòng bật camera để bắt đầu nhận diện</p>
+                </div>
                 
                 <div class="translation-box">
                     <h3>Chữ cái đang nhận diện: <span id="current_letter">-</span></h3>
@@ -41,13 +48,53 @@
 
     <script>
         // Gọi API lấy chữ cái đang nhận diện (Lặp lại mỗi 1 giây)
-        setInterval(() => {
+        let recognizeInterval = null;
+
+        function startCamera() {
+            fetch('/start_camera', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    document.getElementById('video_feed').src = "{{ url_for('video_feed') }}";
+                    document.getElementById('video_feed').style.display = "block";
+                    document.getElementById('camera_placeholder').style.display = "none";
+                    document.querySelector('.btn-start-cam').style.display = "none";
+                    document.querySelector('.btn-stop-cam').style.display = "inline-block";
+                    
+                    if(!recognizeInterval) {
+                        recognizeInterval = setInterval(fetchLatestText, 1000);
+                    }
+                }
+            });
+        }
+
+        function stopCamera() {
+            fetch('/stop_camera', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    document.getElementById('video_feed').src = "";
+                    document.getElementById('video_feed').style.display = "none";
+                    document.getElementById('camera_placeholder').style.display = "flex";
+                    document.querySelector('.btn-start-cam').style.display = "inline-block";
+                    document.querySelector('.btn-stop-cam').style.display = "none";
+                    
+                    if(recognizeInterval) {
+                        clearInterval(recognizeInterval);
+                        recognizeInterval = null;
+                        document.getElementById('current_letter').innerText = "-";
+                    }
+                }
+            });
+        }
+
+        function fetchLatestText() {
             fetch('/get_latest_text')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('current_letter').innerText = data.text || "-";
                 });
-        }, 1000);
+        }
 
         function addLetter() {
             const letter = document.getElementById('current_letter').innerText;

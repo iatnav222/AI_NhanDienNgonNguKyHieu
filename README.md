@@ -1,50 +1,56 @@
-# Đồ án Nhận Diện Ngôn Ngữ Ký Hiệu Tay (Sign Language Recognition)
+# Hướng dẫn Train Dataset
 
-## 📌 Giới thiệu chung
-Đây là đồ án kết thúc học phần A.I, tập trung vào việc áp dụng công nghệ Thị giác Máy tính (Computer Vision) để nhận diện ngôn ngữ ký hiệu tay (hệ chữ cái ASL) thông qua camera thời gian thực, giúp hỗ trợ giao tiếp cho người khiếm thính.
+Tài liệu hướng dẫn quy trình train dataset trên Google Colab
 
-## 🎯 Mục tiêu
-Hệ thống sử dụng thuật toán Học sâu (Deep Learning) - cụ thể là mô hình **YOLOv8** để:
-1. Phát hiện (Detect) vị trí bàn tay trước webcam.
-2. Phân loại (Classify) hình dáng bàn tay đó tương ứng với chữ cái nào (A, B, C...).
-3. Nối các chữ cái thành câu hoàn chỉnh và lưu vào Cơ sở dữ liệu SQLite.
+### Bước 1: Chuẩn bị môi trường Colab
+1. Truy cập vào **[Google Colab](https://colab.research.google.com/)** và tạo một "Sổ tay mới" (New Notebook).
+2. **Bật GPU, Cực kỳ quan trọng:**  Trên thanh menu Colab, chọn **Runtime** -> **Change runtime type** -> Tại mục *Hardware accelerator*, chọn **T4 GPU** rồi bấm Save.
 
-## 🛠 Công nghệ sử dụng
-- **Ngôn ngữ:** Python 3
-- **Mô hình AI:** YOLOv8 (từ Ultralytics)
-- **Computer Vision:** OpenCV
-- **Backend & Database:** Flask (Web Framework), SQLite
-- **Frontend:** HTML / CSS (Vanilla) / JS
+### Bước 2: Tải bộ dataset
+Tạo một ô code (code cell) đầu tiên, dán đoạn mã dưới đây và chạy để tải dataset (đợi chạy xong chuyển sang bước 3)
+
+```python
+!pip install roboflow
+
+from roboflow import Roboflow
+rf = Roboflow(api_key="B6mYXwzEAZfT2DxJdWBq")
+project = rf.workspace("project-g6oev").project("trash-s8fg7")
+version = project.version(5)
+dataset = version.download("yolov8")
+```
+### Bước 3: Cài đặt thư viện
+Tạo một ô code mới (bấm biểu tượng `+ Code/+ Mã`), dán lệnh sau vào và chạy. Cài đặt công cụ train và cấu hình
+
+```python
+%pip install ultralytics
+import ultralytics
+ultralytics.checks()
+```
+
+### Bước 4: Chạy lệnh Train mô hình
+Tạo thêm một ô code, dán đoạn mã dưới đây vào và chạy. Quá trình này sẽ huấn luyện mô hình trong **100 epochs**. 100 epochs train 3 tiếng, phải là 100 epochs độ chính xác mới cao.
+
+```python
+from ultralytics import YOLO
+model = YOLO('yolov8n.pt')
+model.train(data=f"{dataset.location}/data.yaml", epochs=100, imgsz=640)
+```
+
+### Bước 5: Nén Thư Mục
+Sau khi quá trình huấn luyện kết thúc, toàn bộ kết quả train được lưu trong thư mục `runs/`.
+Tạo ô code cuối cùng và chạy đoạn mã sau để nén toàn bộ thư mục đó lại:
+
+```python
+import shutil
+shutil.make_archive('ket_qua_train', 'zip', 'runs')
+```
+
+**Cách tải về:**
+1. Nhìn sang thanh công cụ biểu tượng "Thư mục" (Files) ở bên trái màn hình Colab.
+2. Tìm file có tên là **`ket_qua_train.zip`** (refresh nếu chưa thấy)
+3. Bấm vào biểu tượng dấu 3 chấm cạnh file -> Chọn **Download**.
 
 ---
 
-## 🚀 Hướng dẫn Cài đặt & Chạy dự án (Dành cho máy mới)
-
-### Bước 1: Yêu cầu hệ thống (Prerequisites)
-- Máy tính phải được cài đặt sẵn **Python** (Khuyến nghị bản 3.9 trở lên).
-- **[QUAN TRỌNG]:** Khi cài đặt Python trên Windows, hãy đảm bảo bạn đã tích vào ô vuông **`Add Python to PATH`** ở màn hình cài đặt đầu tiên. Nếu quên tích, Terminal sẽ báo lỗi không nhận diện được chữ "python".
-
-### Bước 2: Tải dự án và Cài đặt thư viện
-1. Tải toàn bộ mã nguồn của kho lưu trữ này về máy và giải nén.
-2. Mở phần mềm Terminal (Command Prompt, PowerShell hoặc Terminal của VS Code) tại thư mục chứa dự án.
-3. Gõ lệnh sau để cài đặt tất cả các thư viện cần thiết cho AI và Web:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-### Bước 3: Đảm bảo có file Mô hình AI (Trọng số)
-- Đảm bảo rằng bạn đã có file **`best.pt`** (Bộ não AI sau khi đã được huấn luyện bằng Google Colab).
-- File `best.pt` phải được đặt ĐÚNG VỊ TRÍ bên trong thư mục `models/`. 
-- *(Đường dẫn chuẩn: `models/best.pt`)*
-
-### Bước 4: Khởi chạy Ứng dụng
-1. Từ Terminal đang mở tại thư mục dự án, chạy lệnh khởi động máy chủ Web (Flask):
-   ```bash
-   python app.py
-   ```
-   *(Nếu bị lỗi từ khóa python, hãy thử dùng lệnh `py app.py` hoặc `python3 app.py`)*
-
-2. Mở trình duyệt Web (Chrome, Edge, Cốc Cốc...) và truy cập vào địa chỉ:
-   👉 **[http://127.0.0.1:5000](http://127.0.0.1:5000)**
-
-3. Cấp quyền truy cập Camera trên trình duyệt và bắt đầu trải nghiệm!
+### *Lưu Ý Cực Kỳ Quan Trọng
+**Tránh tình trạng treo máy :** Google Colab có cơ chế tự động ngắt kết nối nếu tab trình duyệt nhàn rỗi quá lâu (không có tương tác chuột/phím trong khoảng 90 phút). Do thời gian chạy khá dài, cứ khoảng 30-45 phút cần mở lại tab Colab, thực hiện các thao tác như lăn chuột hoặc click vào màn hình để duy trì kết nối. Nếu bị ngắt giữa chừng, toàn bộ quá trình huấn luyện sẽ phải thực hiện lại từ đầu!

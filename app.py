@@ -31,13 +31,15 @@ else:
     model = None
     print("CẢNH BÁO: Không tìm thấy file models/best.pt. Web vẫn chạy nhưng luồng camera sẽ không có AI.")
 
-camera = cv2.VideoCapture(0)
+camera = None
 latest_text = ""
 
 # --- 3. XỬ LÝ HÌNH ẢNH WEBCAM & NHẬN DIỆN ---
 def generate_frames():
-    global latest_text
+    global latest_text, camera
     while True:
+        if camera is None or not camera.isOpened():
+            break
         success, frame = camera.read()
         if not success:
             break
@@ -86,6 +88,21 @@ def get_latest_text():
     # API để JavaScript dưới web gọi lên lấy chữ cái đang nhận diện
     global latest_text
     return jsonify({"text": latest_text})
+
+@app.route('/start_camera', methods=['POST'])
+def start_camera():
+    global camera
+    if camera is None or not camera.isOpened():
+        camera = cv2.VideoCapture(0)
+    return jsonify({"status": "success"})
+
+@app.route('/stop_camera', methods=['POST'])
+def stop_camera():
+    global camera
+    if camera is not None:
+        camera.release()
+        camera = None
+    return jsonify({"status": "success"})
 
 @app.route('/save_history', methods=['POST'])
 def save_history():

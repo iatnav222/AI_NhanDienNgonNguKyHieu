@@ -7,7 +7,7 @@ Tài liệu hướng dẫn quy trình train dataset trên Google Colab
 2. **Bật GPU, Cực kỳ quan trọng:**  Trên thanh menu Colab, chọn **Runtime** -> **Change runtime type** -> Tại mục *Hardware accelerator*, chọn **T4 GPU** rồi bấm Save.
 
 ### Bước 2: Tải bộ dataset
-Tạo một ô code (code cell) đầu tiên, dán đoạn mã dưới đây và chạy để tải dataset (đợi chạy xong chuyển sang bước 3)
+Tạo một ô code (code cell) đầu tiên, dán đoạn mã dưới và chạy để tải dataset (đợi chạy xong chuyển sang bước 3)
 
 ```python
 !pip install roboflow
@@ -19,7 +19,7 @@ version = project.version(5)
 dataset = version.download("yolov8")
 ```
 ### Bước 3: Cài đặt thư viện
-Tạo một ô code mới (bấm biểu tượng `+ Code/+ Mã`), dán lệnh sau vào và chạy. Cài đặt công cụ train và cấu hình
+Tạo một ô code mới (bấm biểu tượng `+ Code`), dán lệnh sau vào và chạy. Cài đặt công cụ train và cấu hình
 
 ```python
 %pip install ultralytics
@@ -28,7 +28,7 @@ ultralytics.checks()
 ```
 
 ### Bước 4: Chạy lệnh Train mô hình
-Tạo thêm một ô code, dán đoạn mã dưới đây vào và chạy. Quá trình này sẽ huấn luyện trong khoảng 3 tiếng.
+Tạo thêm một ô code, dán đoạn mã dưới vào để chạy. Quá trình train mất khoảng 3 tiếng.
 
 ```python
 from ultralytics import YOLO
